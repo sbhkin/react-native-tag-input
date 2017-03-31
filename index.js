@@ -15,6 +15,8 @@ import {
 const { width } = Dimensions.get('window');
 
 type Props = {
+  /** Handler TextInput ChangeText behavior **/
+    onChangeText: (text) => void,
   /**
    * A handler to be called when array of tags change
    */
@@ -87,6 +89,7 @@ const DEFAULT_TAG_REGEX = /(.+)/gi
 
 class TagInput extends Component {
   static propTypes = {
+    onChangeText: PropTypes.func,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.array.isRequired,
     regex: PropTypes.object,
@@ -166,7 +169,12 @@ class TagInput extends Component {
       this.calculateWidth();
     }
   }
-
+  onChangeText = (text) => {
+    if(!text) {
+      return
+    }
+  };
+  
   onChange = (event: Event) => {
     if (!event || !event.nativeEvent)
       return;
@@ -315,6 +323,7 @@ class TagInput extends Component {
                 }]}
                   onBlur={this.onBlur}
                   onChange={this.onChange}
+                  onChangeText={this.onChangeText}
                   onSubmitEditing={this.parseTags}
                   {...inputProps}
                 />
