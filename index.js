@@ -171,10 +171,11 @@ class TagInput extends Component {
   }
   onChangeText = (text) => {
     if(!text) {
-      return
+      return;
     }
+    this.props.onChangeText(text);
   };
-  
+
   onChange = (event: Event) => {
     if (!event || !event.nativeEvent)
       return;
