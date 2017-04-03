@@ -266,7 +266,7 @@ class TagInput extends Component {
           style={[styles.tag, { backgroundColor: tagColor }, this.props.tagContainerStyle]}
           onPress={() => this.addTag(index)}>
           <Text style={[styles.tagText, { color: tagTextColor }, this.props.tagTextStyle]}>
-            {this._getLabelValue(tag)};
+            {this._getLabelValue(tag)}
           </Text>
         </TouchableOpacity>
       )
