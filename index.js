@@ -219,7 +219,7 @@ class TagInput extends Component {
   };
 
   focus = () => {
-    if (this.refs.tagInput)
+    if (this.refs.tagInput && !this.props.inputProps.editable == false)
       this.refs.tagInput.focus();
   };
 
@@ -283,7 +283,7 @@ class TagInput extends Component {
     const defaultInputProps = {
       autoCapitalize: 'none',
       autoCorrect: false,
-      placeholder: 'Start typing',
+      placeholder: '',
       returnKeyType: 'done',
       keyboardType: 'default',
       underlineColorAndroid: 'rgba(0,0,0,0)',
@@ -297,7 +297,7 @@ class TagInput extends Component {
 
     return (
       <TouchableWithoutFeedback
-        onPress={() => this.refs.tagInput.focus()}
+        onPress={() => this.focus()}
         onLayout={this.measureWrapper}
         style={[styles.container]}>
         <View
