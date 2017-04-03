@@ -41,6 +41,8 @@ type Props = {
    * Text color of tags
    */
     tagTextColor?: string,
+
+    isAddTag?: boolean,
   /**
    * Styling override for container surrounding tag text
    */
@@ -237,6 +239,11 @@ class TagInput extends Component {
     this.focus();
   };
 
+  addTag = (index: number) => {
+    const tags = [...this.props.value];
+    this.props.onChange([tags[index]])
+  }
+
   _getLabelValue = (tag) => {
     const { labelKey } = this.props;
 
@@ -250,19 +257,32 @@ class TagInput extends Component {
   };
 
   _renderTag = (tag, index) => {
-    const { tagColor, tagTextColor } = this.props;
-
-    return (
-      <TouchableOpacity
-        key={index}
-        ref={'tag' + index}
-        style={[styles.tag, { backgroundColor: tagColor }, this.props.tagContainerStyle]}
-        onPress={() => this.removeIndex(index)}>
-        <Text style={[styles.tagText, { color: tagTextColor }, this.props.tagTextStyle]}>
-          {this._getLabelValue(tag)}&nbsp;&times;
-        </Text>
-      </TouchableOpacity>
-    );
+    const { tagColor, tagTextColor, isAddTag} = this.props;
+    if(isAddTag) {
+      return(
+        <TouchableOpacity
+          key={index}
+          ref={'tag' + index}
+          style={[styles.tag, { backgroundColor: tagColor }, this.props.tagContainerStyle]}
+          onPress={() => this.addTag(index)}>
+          <Text style={[styles.tagText, { color: tagTextColor }, this.props.tagTextStyle]}>
+            {this._getLabelValue(tag)};
+          </Text>
+        </TouchableOpacity>
+      )
+    }else {
+      return (
+        <TouchableOpacity
+          key={index}
+          ref={'tag' + index}
+          style={[styles.tag, { backgroundColor: tagColor }, this.props.tagContainerStyle]}
+          onPress={() => this.removeIndex(index)}>
+          <Text style={[styles.tagText, { color: tagTextColor }, this.props.tagTextStyle]}>
+            {this._getLabelValue(tag)}&nbsp;&times;
+          </Text>
+        </TouchableOpacity>
+      );
+    }
   };
 
 
@@ -291,7 +311,7 @@ class TagInput extends Component {
 
     const inputProps = { ...defaultInputProps, ...this.props.inputProps };
 
-    const wrapperHeight = (lines - 1) * 40 + 36;
+    const wrapperHeight = (lines - 1) * 50 + 40;
 
     const width = inputWidth ? inputWidth : 400;
 
